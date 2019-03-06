@@ -25,9 +25,14 @@ public class Kermis {
 				botsautos.omzet += botsautos.prijs;
 				break;
 			case "2":
-				System.out.println("De spin draait.");
-				spin.kaartjes++;
-				spin.omzet += spin.prijs;
+				if (spin.aantalDraaienSindsKeuring == spin.draaiLimiet) {
+					spin.opstellingsKeuring();
+				} else {
+					System.out.println("De spin draait.");
+					spin.kaartjes++;
+					spin.aantalDraaienSindsKeuring++;
+					spin.omzet += spin.prijs;
+				}
 				break;
 			case "3":
 				System.out.println("Het spiegelpaleis draait.");
@@ -40,14 +45,19 @@ public class Kermis {
 				spookhuis.omzet += spookhuis.prijs;
 				break;
 			case "5":
-				System.out.println("De hawaii draait.");
-				hawaii.kaartjes++;
-				hawaii.omzet += hawaii.prijs;
+				if (hawaii.aantalDraaienSindsKeuring == hawaii.draaiLimiet) {
+					hawaii.opstellingsKeuring();
+				} else {
+					System.out.println("De hawaii draait.");
+					hawaii.kaartjes++;
+					hawaii.omzet += hawaii.prijs;
+					hawaii.aantalDraaienSindsKeuring++;
+				}
 				break;
 			case "6":
 				System.out.println("Het ladderklimmen draait.");
 				ladderklimmen.kaartjes++;
-				ladderklimmen.omzet = ladderklimmen.prijs*ladderklimmen.kaartjes;
+				ladderklimmen.omzet = ladderklimmen.prijs * ladderklimmen.kaartjes;
 				ladderklimmen.kansSpelBelastingBetalen();
 				break;
 			case "q":
@@ -96,10 +106,23 @@ abstract class Attractie {
 	int kaartjes;
 } // end class Attractie
 
+abstract class RisicoRijkeAttractie extends Attractie {
+	boolean uitslag;
+	int aantalDraaienSindsKeuring;
+	int draaiLimiet;
+
+	boolean opstellingsKeuring() {
+		uitslag = true;
+		System.out.println("Er vindt een onderhoudsbeurt plaats. Hierna zal de attractie weer draaien.");
+		aantalDraaienSindsKeuring = 0;
+		return uitslag;
+	}
+}
+
 class Botsautos extends Attractie {
 } // end class Botsautos
 
-class Spin extends Attractie {
+class Spin extends RisicoRijkeAttractie {
 }// end class Attractie
 
 class Spiegelpaleis extends Attractie {
@@ -108,11 +131,11 @@ class Spiegelpaleis extends Attractie {
 class Spookhuis extends Attractie {
 } // end class Spookhuis
 
-class Hawaii extends Attractie {
+class Hawaii extends RisicoRijkeAttractie {
 } // end class Hawaii
 
 class Ladderklimmen extends Attractie implements GokAttractie {
-	public void kansSpelBelastingBetalen(){
+	public void kansSpelBelastingBetalen() {
 		omzet *= 0.7;
 	}
 } // end class Ladderklimmen
@@ -140,6 +163,7 @@ class Admin {
 	Spin maakSpin() {
 		Spin spin = new Spin();
 		spin.prijs = 2.25;
+		spin.draaiLimiet = 5;
 		return spin;
 	} // end method maakSpin
 
@@ -158,6 +182,7 @@ class Admin {
 	Hawaii maakHawaii() {
 		Hawaii hawaii = new Hawaii();
 		hawaii.prijs = 2.90;
+		hawaii.draaiLimiet = 10;
 		return hawaii;
 	} // end method maakHawaii
 
@@ -173,6 +198,6 @@ class Kassa {
 	int kaartjesTotaal;
 } // end class Kassa
 
-interface GokAttractie{
+interface GokAttractie {
 	void kansSpelBelastingBetalen();
 }
