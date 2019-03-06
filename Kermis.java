@@ -7,18 +7,18 @@ public class Kermis {
 		Kassa kassa = new Kassa();
 		boolean kermisOpen = true;
 		Scanner scanner = new Scanner(System.in);
-		//make the park
+		// make the park
 		Botsautos botsautos = admin.maakBotsautos();
 		Spin spin = admin.maakSpin();
 		Spiegelpaleis spiegelpaleis = admin.maakSpiegelpaleis();
 		Spookhuis spookhuis = admin.maakSpookhuis();
 		Hawaii hawaii = admin.maakHawaii();
 		Ladderklimmen ladderklimmen = admin.maakLadderklimmen();
-		//Open the park
+		// Open the park
 		admin.welkom();
-		while(kermisOpen == true) {
+		while (kermisOpen == true) {
 			String invoer = scanner.nextLine();
-			switch(invoer) {
+			switch (invoer) {
 			case "1":
 				System.out.println("De botsauto's draait.");
 				botsautos.kaartjes++;
@@ -76,36 +76,44 @@ public class Kermis {
 			default:
 				System.out.println("Verkeerde invoer.");
 				break;
-			} //end switch
-			kassa.kaartjesTotaal = botsautos.kaartjes + spin.kaartjes + spiegelpaleis.kaartjes + spookhuis.kaartjes + hawaii.kaartjes + ladderklimmen.kaartjes;
-			kassa.omzetTotaal = botsautos.omzet + spin.omzet + spiegelpaleis.omzet + spookhuis.omzet + hawaii.omzet + ladderklimmen.omzet;
-		} //end while loop
+			} // end switch
+			kassa.kaartjesTotaal = botsautos.kaartjes + spin.kaartjes + spiegelpaleis.kaartjes + spookhuis.kaartjes
+					+ hawaii.kaartjes + ladderklimmen.kaartjes;
+			kassa.omzetTotaal = botsautos.omzet + spin.omzet + spiegelpaleis.omzet + spookhuis.omzet + hawaii.omzet
+					+ ladderklimmen.omzet;
+		} // end while loop
 
-	} //end psvm
+	} // end psvm
 
-} //end class Kermis
+} // end class Kermis
 
-abstract class Attractie{
+abstract class Attractie {
 	String naam;
 	double prijs;
 	double omzet;
 	int oppervlakte;
 	int kaartjes;
-} //end class Attractie
+} // end class Attractie
 
-class Botsautos extends Attractie{
+class Botsautos extends Attractie {
 } // end class Botsautos
-class Spin extends Attractie{
+
+class Spin extends Attractie {
 }// end class Attractie
-class Spiegelpaleis extends Attractie{
+
+class Spiegelpaleis extends Attractie {
 }// end class Spiegelpaleis
-class Spookhuis extends Attractie{
-} //end class Spookhuis
-class Hawaii extends Attractie{
-} //end class Hawaii
-class Ladderklimmen extends Attractie{
-} //end class Ladderklimmen
-class Admin{
+
+class Spookhuis extends Attractie {
+} // end class Spookhuis
+
+class Hawaii extends Attractie {
+} // end class Hawaii
+
+class Ladderklimmen extends Attractie {
+} // end class Ladderklimmen
+
+class Admin {
 	void welkom() {
 		System.out.println("Welkom bij de kermis. Kies een getal tussen 1 en 6 voor een attractie.");
 		System.out.println("Kies (1) voor botsauto's.");
@@ -117,40 +125,46 @@ class Admin{
 		System.out.println("Kies (o) om een overzicht van de omzet te zien.");
 		System.out.println("Kies (k) om een overzicht van de kaartverkoop te zien.");
 		System.out.println("Kies (q) om de kermis te sluiten.");
-	} //end method welkom
+	} // end method welkom
+
 	Botsautos maakBotsautos() {
 		Botsautos botsautos = new Botsautos();
 		botsautos.prijs = 2.50;
 		return botsautos;
-	} //end method maakBotsautos
+	} // end method maakBotsautos
+
 	Spin maakSpin() {
 		Spin spin = new Spin();
 		spin.prijs = 2.25;
 		return spin;
-	} //end method maakSpin
+	} // end method maakSpin
+
 	Spiegelpaleis maakSpiegelpaleis() {
 		Spiegelpaleis spiegelpaleis = new Spiegelpaleis();
 		spiegelpaleis.prijs = 2.75;
 		return spiegelpaleis;
-	} //end method maakSpiegelpaleis
+	} // end method maakSpiegelpaleis
+
 	Spookhuis maakSpookhuis() {
 		Spookhuis spookhuis = new Spookhuis();
 		spookhuis.prijs = 3.20;
 		return spookhuis;
-	} //end method maakSpookhuis
+	} // end method maakSpookhuis
+
 	Hawaii maakHawaii() {
 		Hawaii hawaii = new Hawaii();
 		hawaii.prijs = 2.90;
 		return hawaii;
-	} //end method maakHawaii
+	} // end method maakHawaii
+
 	Ladderklimmen maakLadderklimmen() {
 		Ladderklimmen ladderklimmen = new Ladderklimmen();
 		ladderklimmen.prijs = 5.00;
 		return ladderklimmen;
-	} //end method maakLadderKlimmen
-} //end class admin
+	} // end method maakLadderKlimmen
+} // end class admin
 
-class Kassa{
+class Kassa {
 	double omzetTotaal;
 	int kaartjesTotaal;
-} //end class Kassa
+} // end class Kassa
