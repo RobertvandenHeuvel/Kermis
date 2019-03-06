@@ -147,7 +147,10 @@ abstract class RisicoRijkeAttractie extends Attractie {
 class Botsautos extends Attractie {
 } // end class Botsautos
 
-class Spin extends RisicoRijkeAttractie {
+class Spin extends RisicoRijkeAttractie implements GokAttractie {
+	public void kansSpelBelastingBetalen() {
+		omzet *= 0.7;
+	} // end method kansSpelBelastingBetalen
 }// end class Attractie
 
 class Spiegelpaleis extends Attractie {
@@ -229,11 +232,9 @@ interface GokAttractie {
 } // end method kansSpelBelastingBetalen
 
 class BelastingInspecteur {
-	boolean attractieChecken;
 
 	void checkenEnBetalen(Attractie a) {
 		if (a instanceof GokAttractie) {
-			attractieChecken = true;
 			((GokAttractie) a).kansSpelBelastingBetalen();
 		} // end if statement
 	} // end method checkenEnBetalen
