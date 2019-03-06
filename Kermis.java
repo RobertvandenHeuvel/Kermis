@@ -22,42 +22,45 @@ public class Kermis {
 			case "1":
 				System.out.println("De botsauto's draait.");
 				botsautos.omzet += botsautos.prijs;
-				kassa.omzetTotaal += botsautos.prijs;
 				break;
 			case "2":
 				System.out.println("De spin draait.");
 				spin.omzet += spin.prijs;
-				kassa.omzetTotaal += spin.prijs;
 				break;
 			case "3":
 				System.out.println("Het spiegelpaleis draait.");
 				spiegelpaleis.omzet += spiegelpaleis.prijs;
-				kassa.omzetTotaal += spiegelpaleis.prijs;
 				break;
 			case "4":
 				System.out.println("Het spookhuis draait.");
-				spookhuis.omzet += spiegelpaleis.prijs;
-				kassa.omzetTotaal += spookhuis.prijs;
+				spookhuis.omzet += spookhuis.prijs;
 				break;
 			case "5":
 				System.out.println("De hawaii draait.");
 				hawaii.omzet += hawaii.prijs;
-				kassa.omzetTotaal += hawaii.prijs;
 				break;
 			case "6":
 				System.out.println("Het ladderklimmen draait.");
 				ladderklimmen.omzet += ladderklimmen.prijs;
-				kassa.omzetTotaal += ladderklimmen.prijs;
 				break;
 			case "q":
 				System.out.println("De kermis is gesloten");
 				System.exit(0);
 				break;
+			case "o":
+				System.out.println("Omzet:");
+				System.out.println("Botsauto's: " + botsautos.omzet);
+				System.out.println("Spin: " + spin.omzet);
+				System.out.println("Spiegelpaleis: " + spiegelpaleis.omzet);
+				System.out.println("Spookhuis: " + spookhuis.omzet);
+				System.out.println("Hawaii: " + hawaii.omzet);
+				System.out.println("Ladderklimmen: " + ladderklimmen.omzet);
+				System.out.println("Totaal: " + kassa.omzetTotaal);
 			default:
 				System.out.println("Verkeerde invoer. Kies een getal tussen 1 en 6.");
 				break;
 			} //end switch
-			System.out.println("Het totale omzet is: " + kassa.omzetTotaal);
+			kassa.omzetTotaal = botsautos.omzet + spin.omzet + spiegelpaleis.omzet + spookhuis.omzet + hawaii.omzet + ladderklimmen.omzet;
 		} //end while loop
 
 	} //end psvm
@@ -128,4 +131,5 @@ class Admin{
 
 class Kassa{
 	double omzetTotaal;
+	int kaartjesTotaal;
 } //end class Kassa
