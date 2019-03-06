@@ -112,7 +112,7 @@ public class Kermis {
 			case "m":
 				System.out.println("De monteur wordt gebeld. Druk (s) voor spin of (h) voor hawaii.");
 				String invoer2 = scanner.nextLine();
-				switch(invoer2) {
+				switch (invoer2) {
 				case "s":
 					spin.opstellingsKeuring();
 					break;
@@ -122,12 +122,12 @@ public class Kermis {
 				default:
 					System.out.println("Verkeerde invoer.");
 					break;
-				}
+				} //end inside switch
 				break;
 			default:
 				System.out.println("Verkeerde invoer.");
 				break;
-			} // end switch
+			} // end outside switch
 			kassa.kaartjesTotaal = botsautos.kaartjes + spin.kaartjes + spiegelpaleis.kaartjes + spookhuis.kaartjes
 					+ hawaii.kaartjes + ladderklimmen.kaartjes;
 			kassa.omzetTotaal = botsautos.omzet + spin.omzet + spiegelpaleis.omzet + spookhuis.omzet + hawaii.omzet
@@ -146,9 +146,10 @@ abstract class Attractie {
 	int kaartjes;
 } // end class Attractie
 
-abstract class RisicoRijkeAttractie extends Attractie{
+abstract class RisicoRijkeAttractie extends Attractie {
 	int aantalDraaienSindsKeuring;
 	int draaiLimiet;
+
 	void opstellingsKeuring() {
 		System.out.println("De monteur is aan de slag. Hierna zal de attractie weer draaien.");
 		aantalDraaienSindsKeuring = 0;
@@ -251,8 +252,9 @@ class BelastingInspecteur {
 		} // end if statement
 	} // end method checkenEnBetalen
 } // end class BelastingInspecteur
-class OnderhoudException extends Exception{
-	OnderhoudException(){
+
+class OnderhoudException extends Exception {
+	OnderhoudException() {
 		System.out.println("OnderhoudException");
 	}
 }
