@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Kermis {
 
-	public static void main(String[] args) throws OnderhoudException {
+	public static void main(String[] args) {
 		Admin admin = new Admin();
 		Kassa kassa = new Kassa();
 		BelastingInspecteur belastingInspecteur = new BelastingInspecteur();
@@ -49,15 +49,24 @@ public class Kermis {
 				botsautos.omzet += botsautos.prijs;
 				break;
 			case "2":
-				if (spin.aantalDraaienSindsKeuring == spin.draaiLimiet) {
-					throw new OnderhoudException();
-				} // end if statement
-				else {
-					System.out.println("De spin draait.");
+				try {
+					spin.teVaakGedraaid();
 					spin.kaartjes++;
 					spin.aantalDraaienSindsKeuring++;
 					spin.omzet += spin.prijs;
-				} // end else statement
+					System.out.println("De spin draait.");
+				} //end try statement
+				catch(OnderhoudException o){
+					System.out.println("Druk (m) om de monteur te bellen.");
+					String invoer2 = scanner.nextLine();
+					while (! invoer2.contentEquals("m")) {
+						System.out.println("Verkeerde invoer.");
+						invoer2 = scanner.nextLine();
+					} //end while loop
+					if (invoer2.contentEquals("m")) {
+						spin.opstellingsKeuring();
+					} //end if statement
+				} //end catch statement
 				break;
 			case "3":
 				System.out.println("Het spiegelpaleis draait.");
@@ -70,15 +79,24 @@ public class Kermis {
 				spookhuis.omzet += spookhuis.prijs;
 				break;
 			case "5":
-				if (hawaii.aantalDraaienSindsKeuring == hawaii.draaiLimiet) {
-					throw new OnderhoudException();
-				} // end if statement
-				else {
-					System.out.println("De hawaii draait.");
+				try {
+					hawaii.teVaakGedraaid();
 					hawaii.kaartjes++;
-					hawaii.omzet += hawaii.prijs;
 					hawaii.aantalDraaienSindsKeuring++;
-				} // end else statement
+					hawaii.omzet += hawaii.prijs;
+					System.out.println("De hawaii draait.");
+				} //end try statement
+				catch(OnderhoudException o){
+					System.out.println("Druk (m) om de monteur te bellen.");
+					String invoer2 = scanner.nextLine();
+					while (! invoer2.contentEquals("m")) {
+						System.out.println("Verkeerde invoer.");
+						invoer2 = scanner.nextLine();
+					} //end while loop
+					if (invoer2.contentEquals("m")) {
+						hawaii.opstellingsKeuring();
+					} //end if statement
+				} //end catch statement
 				break;
 			case "6":
 				System.out.println("Het ladderklimmen draait.");
@@ -111,8 +129,8 @@ public class Kermis {
 				break;
 			case "m":
 				System.out.println("De monteur wordt gebeld. Druk (s) voor spin of (h) voor hawaii.");
-				String invoer2 = scanner.nextLine();
-				switch (invoer2) {
+				String invoer3 = scanner.nextLine();
+				switch (invoer3) {
 				case "s":
 					spin.opstellingsKeuring();
 					break;
@@ -122,7 +140,7 @@ public class Kermis {
 				default:
 					System.out.println("Verkeerde invoer.");
 					break;
-				} //end inside switch
+				} // end inside switch
 				break;
 			default:
 				System.out.println("Verkeerde invoer.");
@@ -149,6 +167,12 @@ abstract class Attractie {
 abstract class RisicoRijkeAttractie extends Attractie {
 	int aantalDraaienSindsKeuring;
 	int draaiLimiet;
+
+	void teVaakGedraaid() throws OnderhoudException {
+		if (aantalDraaienSindsKeuring == draaiLimiet) {
+			throw new OnderhoudException();
+		} // end if statement
+	} // end method teVaakGedraaid
 
 	void opstellingsKeuring() {
 		System.out.println("De monteur is aan de slag. Hierna zal de attractie weer draaien.");
