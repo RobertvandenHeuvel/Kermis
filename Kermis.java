@@ -47,7 +47,8 @@ public class Kermis {
 			case "6":
 				System.out.println("Het ladderklimmen draait.");
 				ladderklimmen.kaartjes++;
-				ladderklimmen.omzet += ladderklimmen.prijs;
+				ladderklimmen.omzet = ladderklimmen.prijs*ladderklimmen.kaartjes;
+				ladderklimmen.kansSpelBelastingBetalen();
 				break;
 			case "q":
 				System.out.println("De kermis is gesloten");
@@ -110,7 +111,10 @@ class Spookhuis extends Attractie {
 class Hawaii extends Attractie {
 } // end class Hawaii
 
-class Ladderklimmen extends Attractie {
+class Ladderklimmen extends Attractie implements GokAttractie {
+	public void kansSpelBelastingBetalen(){
+		omzet *= 0.7;
+	}
 } // end class Ladderklimmen
 
 class Admin {
@@ -168,3 +172,7 @@ class Kassa {
 	double omzetTotaal;
 	int kaartjesTotaal;
 } // end class Kassa
+
+interface GokAttractie{
+	void kansSpelBelastingBetalen();
+}
