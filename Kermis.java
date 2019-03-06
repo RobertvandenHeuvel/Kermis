@@ -18,7 +18,40 @@ public class Kermis {
 		admin.welkom();
 		while(kermisOpen == true) {
 			String invoer = scanner.nextLine();
-			Attractie.draaien(invoer);
+			switch(invoer) {
+			case "1":
+				System.out.println("De botsauto's draait.");
+				kassa.omzet += botsautos.prijs;
+				break;
+			case "2":
+				System.out.println("De spin draait.");
+				kassa.omzet += spin.prijs;
+				break;
+			case "3":
+				System.out.println("Het spiegelpaleis draait.");
+				kassa.omzet += spiegelpaleis.prijs;
+				break;
+			case "4":
+				System.out.println("Het spookhuis draait.");
+				kassa.omzet += spookhuis.prijs;
+				break;
+			case "5":
+				System.out.println("De hawaii draait.");
+				kassa.omzet += hawaii.prijs;
+				break;
+			case "6":
+				System.out.println("Het ladderklimmen draait.");
+				kassa.omzet += ladderklimmen.prijs;
+				break;
+			case "q":
+				System.out.println("De kermis is gesloten");
+				System.exit(0);
+				break;
+			default:
+				System.out.println("Verkeerde invoer. Kies een getal tussen 1 en 6.");
+				break;
+			} //end switch
+			System.out.println("Het totale omzet is: " + kassa.omzet);
 		} //end while loop
 
 	} //end psvm
@@ -29,35 +62,6 @@ abstract class Attractie{
 	String naam;
 	double prijs;
 	int oppervlakte;
-	static void draaien(String a) {
-		switch(a) {
-		case "1":
-			System.out.println("De botsauto's draait.");
-			break;
-		case "2":
-			System.out.println("De spin draait.");
-			break;
-		case "3":
-			System.out.println("Het spiegelpaleis draait.");
-			break;
-		case "4":
-			System.out.println("Het spookhuis draait.");
-			break;
-		case "5":
-			System.out.println("De hawaii draait.");
-			break;
-		case "6":
-			System.out.println("Het ladderklimmen draait.");
-			break;
-		case "q":
-			System.out.println("De kermis is gesloten");
-			System.exit(0);
-			break;
-		default:
-			System.out.println("Verkeerde invoer. Kies een getal tussen 1 en 6.");
-			break;
-		} //end switch
-	} //end method draaien
 } //end class Attractie
 
 class Botsautos extends Attractie{
