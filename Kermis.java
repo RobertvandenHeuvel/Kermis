@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Kermis {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws OnderhoudException {
 		Admin admin = new Admin();
 		Kassa kassa = new Kassa();
 		BelastingInspecteur belastingInspecteur = new BelastingInspecteur();
@@ -50,7 +50,7 @@ public class Kermis {
 				break;
 			case "2":
 				if (spin.aantalDraaienSindsKeuring == spin.draaiLimiet) {
-					spin.opstellingsKeuring();
+					throw new OnderhoudException();
 				} // end if statement
 				else {
 					System.out.println("De spin draait.");
@@ -71,7 +71,7 @@ public class Kermis {
 				break;
 			case "5":
 				if (hawaii.aantalDraaienSindsKeuring == hawaii.draaiLimiet) {
-					hawaii.opstellingsKeuring();
+					throw new OnderhoudException();
 				} // end if statement
 				else {
 					System.out.println("De hawaii draait.");
@@ -109,6 +109,21 @@ public class Kermis {
 				System.out.println("Ladderklimmen: " + ladderklimmen.kaartjes);
 				System.out.println("Totaal: " + kassa.kaartjesTotaal);
 				break;
+			case "m":
+				System.out.println("De monteur wordt gebeld. Druk (s) voor spin of (h) voor hawaii.");
+				String invoer2 = scanner.nextLine();
+				switch(invoer2) {
+				case "s":
+					spin.opstellingsKeuring();
+					break;
+				case "h":
+					hawaii.opstellingsKeuring();
+					break;
+				default:
+					System.out.println("Verkeerde invoer.");
+					break;
+				}
+				break;
 			default:
 				System.out.println("Verkeerde invoer.");
 				break;
@@ -131,16 +146,12 @@ abstract class Attractie {
 	int kaartjes;
 } // end class Attractie
 
-abstract class RisicoRijkeAttractie extends Attractie {
-	boolean uitslag;
+abstract class RisicoRijkeAttractie extends Attractie{
 	int aantalDraaienSindsKeuring;
 	int draaiLimiet;
-
-	boolean opstellingsKeuring() {
-		uitslag = true;
-		System.out.println("Er vindt een onderhoudsbeurt plaats. Hierna zal de attractie weer draaien.");
+	void opstellingsKeuring() {
+		System.out.println("De monteur is aan de slag. Hierna zal de attractie weer draaien.");
 		aantalDraaienSindsKeuring = 0;
-		return uitslag;
 	} // end method opstellingsKeuring
 } // end class RisicoRijkeAttractie
 
@@ -179,6 +190,7 @@ class Admin {
 		System.out.println("Kies (6) voor het ladderklimmen.");
 		System.out.println("Kies (o) om een overzicht van de omzet te zien.");
 		System.out.println("Kies (k) om een overzicht van de kaartverkoop te zien.");
+		System.out.println("Kies (m) om de monteur te bellen.");
 		System.out.println("Kies (q) om de kermis te sluiten.");
 	} // end method welkom
 
@@ -239,3 +251,8 @@ class BelastingInspecteur {
 		} // end if statement
 	} // end method checkenEnBetalen
 } // end class BelastingInspecteur
+class OnderhoudException extends Exception{
+	OnderhoudException(){
+		System.out.println("OnderhoudException");
+	}
+}
