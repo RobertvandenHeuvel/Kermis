@@ -21,27 +21,33 @@ public class Kermis {
 			switch(invoer) {
 			case "1":
 				System.out.println("De botsauto's draait.");
-				kassa.omzet += botsautos.prijs;
+				botsautos.omzet += botsautos.prijs;
+				kassa.omzetTotaal += botsautos.prijs;
 				break;
 			case "2":
 				System.out.println("De spin draait.");
-				kassa.omzet += spin.prijs;
+				spin.omzet += spin.prijs;
+				kassa.omzetTotaal += spin.prijs;
 				break;
 			case "3":
 				System.out.println("Het spiegelpaleis draait.");
-				kassa.omzet += spiegelpaleis.prijs;
+				spiegelpaleis.omzet += spiegelpaleis.prijs;
+				kassa.omzetTotaal += spiegelpaleis.prijs;
 				break;
 			case "4":
 				System.out.println("Het spookhuis draait.");
-				kassa.omzet += spookhuis.prijs;
+				spookhuis.omzet += spiegelpaleis.prijs;
+				kassa.omzetTotaal += spookhuis.prijs;
 				break;
 			case "5":
 				System.out.println("De hawaii draait.");
-				kassa.omzet += hawaii.prijs;
+				hawaii.omzet += hawaii.prijs;
+				kassa.omzetTotaal += hawaii.prijs;
 				break;
 			case "6":
 				System.out.println("Het ladderklimmen draait.");
-				kassa.omzet += ladderklimmen.prijs;
+				ladderklimmen.omzet += ladderklimmen.prijs;
+				kassa.omzetTotaal += ladderklimmen.prijs;
 				break;
 			case "q":
 				System.out.println("De kermis is gesloten");
@@ -51,7 +57,7 @@ public class Kermis {
 				System.out.println("Verkeerde invoer. Kies een getal tussen 1 en 6.");
 				break;
 			} //end switch
-			System.out.println("Het totale omzet is: " + kassa.omzet);
+			System.out.println("Het totale omzet is: " + kassa.omzetTotaal);
 		} //end while loop
 
 	} //end psvm
@@ -61,6 +67,7 @@ public class Kermis {
 abstract class Attractie{
 	String naam;
 	double prijs;
+	double omzet;
 	int oppervlakte;
 } //end class Attractie
 
@@ -120,5 +127,5 @@ class Admin{
 } //end class admin
 
 class Kassa{
-	double omzet;
+	double omzetTotaal;
 } //end class Kassa
