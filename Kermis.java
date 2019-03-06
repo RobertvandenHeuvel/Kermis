@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Kermis {
@@ -5,8 +7,11 @@ public class Kermis {
 	public static void main(String[] args) {
 		Admin admin = new Admin();
 		Kassa kassa = new Kassa();
+		BelastingInspecteur belastingInspecteur = new BelastingInspecteur();
 		boolean kermisOpen = true;
 		Scanner scanner = new Scanner(System.in);
+		Random random = new Random();
+
 		// make the park
 		Botsautos botsautos = admin.maakBotsautos();
 		Spin spin = admin.maakSpin();
@@ -14,9 +19,28 @@ public class Kermis {
 		Spookhuis spookhuis = admin.maakSpookhuis();
 		Hawaii hawaii = admin.maakHawaii();
 		Ladderklimmen ladderklimmen = admin.maakLadderklimmen();
+		ArrayList<Attractie> attractieArrayList = new ArrayList();
+		attractieArrayList.add(botsautos);
+		attractieArrayList.add(spin);
+		attractieArrayList.add(spiegelpaleis);
+		attractieArrayList.add(spookhuis);
+		attractieArrayList.add(hawaii);
+		attractieArrayList.add(ladderklimmen);
+
 		// Open the park
 		admin.welkom();
 		while (kermisOpen == true) {
+			int taxman = random.nextInt(15);
+			if (taxman == 4) {
+				System.out.println("De belastinginspecteur komt langs");
+				kassa.aantalBIBezoeken++;
+				for (Attractie a : attractieArrayList) {
+					belastingInspecteur.checkenEnBetalen(a);
+				} // end for loop
+				kassa.omzetTotaal = botsautos.omzet + spin.omzet + spiegelpaleis.omzet + spookhuis.omzet + hawaii.omzet
+						+ ladderklimmen.omzet;
+				System.out.println("De belasting is betaald.");
+			} // end if statement
 			String invoer = scanner.nextLine();
 			switch (invoer) {
 			case "1":
@@ -27,12 +51,13 @@ public class Kermis {
 			case "2":
 				if (spin.aantalDraaienSindsKeuring == spin.draaiLimiet) {
 					spin.opstellingsKeuring();
-				} else {
+				} // end if statement
+				else {
 					System.out.println("De spin draait.");
 					spin.kaartjes++;
 					spin.aantalDraaienSindsKeuring++;
 					spin.omzet += spin.prijs;
-				}
+				} // end else statement
 				break;
 			case "3":
 				System.out.println("Het spiegelpaleis draait.");
@@ -47,18 +72,18 @@ public class Kermis {
 			case "5":
 				if (hawaii.aantalDraaienSindsKeuring == hawaii.draaiLimiet) {
 					hawaii.opstellingsKeuring();
-				} else {
+				} // end if statement
+				else {
 					System.out.println("De hawaii draait.");
 					hawaii.kaartjes++;
 					hawaii.omzet += hawaii.prijs;
 					hawaii.aantalDraaienSindsKeuring++;
-				}
+				} // end else statement
 				break;
 			case "6":
 				System.out.println("Het ladderklimmen draait.");
 				ladderklimmen.kaartjes++;
 				ladderklimmen.omzet = ladderklimmen.prijs * ladderklimmen.kaartjes;
-				ladderklimmen.kansSpelBelastingBetalen();
 				break;
 			case "q":
 				System.out.println("De kermis is gesloten");
@@ -116,8 +141,8 @@ abstract class RisicoRijkeAttractie extends Attractie {
 		System.out.println("Er vindt een onderhoudsbeurt plaats. Hierna zal de attractie weer draaien.");
 		aantalDraaienSindsKeuring = 0;
 		return uitslag;
-	}
-}
+	} // end method opstellingsKeuring
+} // end class RisicoRijkeAttractie
 
 class Botsautos extends Attractie {
 } // end class Botsautos
@@ -137,7 +162,7 @@ class Hawaii extends RisicoRijkeAttractie {
 class Ladderklimmen extends Attractie implements GokAttractie {
 	public void kansSpelBelastingBetalen() {
 		omzet *= 0.7;
-	}
+	} // end method kansSpelBelastingBetalen
 } // end class Ladderklimmen
 
 class Admin {
@@ -196,8 +221,20 @@ class Admin {
 class Kassa {
 	double omzetTotaal;
 	int kaartjesTotaal;
+	int aantalBIBezoeken;
 } // end class Kassa
 
 interface GokAttractie {
 	void kansSpelBelastingBetalen();
-}
+} // end method kansSpelBelastingBetalen
+
+class BelastingInspecteur {
+	boolean attractieChecken;
+
+	void checkenEnBetalen(Attractie a) {
+		if (a instanceof GokAttractie) {
+			attractieChecken = true;
+			((GokAttractie) a).kansSpelBelastingBetalen();
+		} // end if statement
+	} // end method checkenEnBetalen
+} // end class BelastingInspecteur
